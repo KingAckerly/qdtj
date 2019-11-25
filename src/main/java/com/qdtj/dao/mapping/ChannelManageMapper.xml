@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qdtj.dao.IChannelManageDao">
+
+	<insert id="addChannel" parameterType="com.qdtj.domain.Channel">
+		INSERT INTO channel VALUES(0,#{channelName},#{channelNumber})
+	</insert>
+	
+	<update id="updateChannel" parameterType="com.qdtj.domain.Channel">
+		UPDATE channel SET channel_name = #{channelName},channel_number = #{channelNumber} WHERE channel_id = #{channelId}
+	</update>
+	
+	<select id="getChannelList" parameterType="java.lang.String" resultType="com.qdtj.domain.Channel">
+		SELECT t.channel_id AS channelId,t.channel_name AS channelName,t.channel_number AS channelNumber FROM channel t
+		WHERE 1 = 1
+		<if test="_parameter != null and _parameter !=''" >
+        AND t.channel_name LIKE concat(concat('%',#{_parameter}),'%')
+        </if>
+	</select>
+	
+	<resultMap id="resultMap-Channel" type="java.util.HashMap">
+		<result column="roleId" property="roleId" jdbcType="VARCHAR" />
+		<result column="channelId" property="channelId" jdbcType="VARCHAR" />
+		<result column="channelName" property="channelName" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<!-- 根据角色查询对应渠道信息 -->
+	<select id="getAllChannelForRole" parameterType="java.lang.Integer" resultMap="resultMap-Channel">
+		SELECT r.role_id roleId, c.channel_id channelId, c.channel_name channelName
+		FROM channel c
+		LEFT JOIN role_channel cp ON c.channel_id = cp.channel_id
+		AND cp.role_id = #{roleId}
+		LEFT JOIN role r ON r.role_id = cp.role_id
+		AND r.role_id = #{roleId}
+	</select>
+	
+	<insert id="dealChannelForRole" parameterType = "java.util.List">
+		INSERT INTO role_channel (role_id, channel_id)
+		VALUES 
+		 <foreach collection ="list" item="channelList" index= "index" separator =",">
+		 	(#{channelList.roleId}, #{channelList.channelId})
+		 </foreach>
+		  ON DUPLICATE KEY UPDATE 
+		role_id = VALUES (role_id), channel_id = VALUES (channel_id)
+	</insert>
+	
+	<delete id="deleteChannelForRole" parameterType="java.lang.Integer">
+		DELETE FROM role_channel WHERE role_id=#{role_id}
+	</delete>
+
+</mapper>

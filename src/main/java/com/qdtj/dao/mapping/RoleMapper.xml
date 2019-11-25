@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qdtj.dao.IRoleDao">
+	
+	<select id="getRoleList"  resultType="com.qdtj.domain.Role">
+		SELECT t.role_id AS roleId,t.role_cnname AS roleCnname, t.desc FROM role t
+	</select>
+	
+	<update id="updateRole" parameterType="java.util.Map">
+		UPDATE role SET role_cnname = #{roleCnname} WHERE role_id = #{roleId}
+	</update>
+	
+	<delete id="deleteRole" parameterType="java.lang.Integer">
+		DELETE FROM role WHERE role_id = #{roleId}
+	</delete>
+	
+	<delete id="deleteRoleForChannel" parameterType="java.lang.Integer">
+		DELETE FROM role_channel WHERE role_id = #{roleId}
+	</delete>
+	
+	<delete id="deleteRoleForPermission" parameterType="java.lang.Integer">
+		DELETE FROM role_permission WHERE role_id = #{roleId}
+	</delete>
+
+</mapper>

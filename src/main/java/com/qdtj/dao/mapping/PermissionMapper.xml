@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qdtj.dao.IPermissionDao">
+
+	<resultMap id="Permission" type="com.qdtj.domain.Permission">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="type" property="type" jdbcType="VARCHAR" />
+		<result column="url" property="url" jdbcType="VARCHAR" />
+		<result column="percode" property="percode" jdbcType="VARCHAR" />
+		<result column="parentid" property="parentid" jdbcType="VARCHAR" />
+		<result column="parentids" property="parentids" jdbcType="VARCHAR" />
+		<result column="sortstring" property="sortstring" jdbcType="VARCHAR" />
+		<result column="available" property="available" jdbcType="CHAR" />
+	</resultMap>
+
+	<select id="getPermissionByUserId" parameterType="java.util.Map" 
+		resultType="com.qdtj.domain.Permission">
+		SELECT * FROM permission
+			WHERE
+				1 = 1
+			<if test="permission_type!=null and permission_type!=''">
+			 	AND TYPE = #{permission_type}
+			 </if>
+			 <if test="user_id!=null and user_id!=''">
+			 AND id IN (SELECT permission_id FROM role_permission
+				WHERE role_id IN (SELECT role_id FROM user_role
+					WHERE user_id = #{user_id}))
+			 </if>
+				 ORDER BY sortstring
+	</select>
+	
+	<resultMap id="resultMap-Permission" type="java.util.HashMap">
+		<result column="roleId" property="roleId" jdbcType="VARCHAR" />
+		<result column="permissionId" property="permissionId" jdbcType="VARCHAR" />
+		<result column="permissionName" property="permissionName" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<select id="getAllPermissionForRole" parameterType="java.lang.Integer" resultMap="resultMap-Permission">
+		SELECT r.role_id roleId, p.id permissionId, p.name permissionName 
+		FROM permission p 
+		LEFT JOIN role_permission rp ON p.id = rp.permission_id 
+		AND rp.role_id = #{roleId}
+		LEFT JOIN role r ON r.role_id = rp.role_id 
+		AND r.role_id = #{roleId}
+		WHERE p.type='menu'
+	</select>
+	
+	<insert id="dealPermissionForRole" parameterType = "java.util.List">
+		INSERT INTO role_permission (role_id, permission_id)
+		VALUES 
+		 <foreach collection ="list" item="permissionList" index= "index" separator =",">
+		 	(#{permissionList.roleId}, #{permissionList.permissionId})
+		 </foreach>
+		  ON DUPLICATE KEY UPDATE 
+		role_id = VALUES (role_id), permission_id = VALUES (permission_id)
+	</insert>
+	
+	<delete id="deletePermissionForRole" parameterType="java.lang.Integer">
+		DELETE FROM role_permission WHERE role_id=#{role_id}
+	</delete>
+</mapper>

@@ -1,0 +1,544 @@
+html, body, ul, li {
+	padding: 0px;
+	margin: 0px;
+	font-family: "Microsoft YaHei";
+	list-style-type: none;
+}
+
+body {
+	scrollbar-arrow-color: red
+}
+
+ul li {
+	list-style-type: none;
+}
+
+.fl {
+	float: left;
+}
+
+.fr {
+	float: right;
+}
+
+a {
+	text-decoration: none;
+}
+
+a, span {
+	display: inline-block;
+}
+
+.textlt {
+	text-align: left;
+}
+
+.textrt {
+	text-align: right;
+}
+
+input {
+	outline: none;
+}
+
+.hidden {
+	display: none;
+}
+
+.show {
+	display: block;
+}
+
+.hide {
+	display: none;
+}
+
+.clear {
+	clear: both;
+}
+
+button {
+	width: 74px;
+	height: 30px;
+	line-height: 30px;
+	color: #fff;
+	text-align: center;
+	margin: auto;
+	background: #2b6db4;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	border-radius: 4px
+}
+/* public nav */
+.nav {
+	width: 100%;
+	height: 80px;
+	line-height: 80px;
+	background: #145fa6;
+}
+
+.nav .midden {
+	width: 1200px;
+	margin: auto;
+}
+
+.nav ul {
+	width: 1000px;
+	float: left;
+	height: 80px;
+	line-height: 80px;
+}
+
+.nav ul li {
+	list-style-type: none;
+	float: left;
+	width: 100px;
+	margin: auto;
+	color: #fff;
+	font-size: 18px;
+	text-align: center;
+	cursor: pointer;
+}
+
+.nav ul li a {
+	width: 100%;
+	height: 100%;
+	display: inline-block;
+	text-decoration: none;
+	color: #fff;
+}
+
+.nav ul .active {
+	background: #fff;
+	color: #145fa6;
+	font-weight: 600;
+}
+
+.nav ul .active a {
+	color: #145fa6;
+}
+
+.endbt {
+	width: 100px;
+	color: #fff;
+	float: right;
+	cursor: pointer;
+	font-size: 18px;
+	text-align: center;
+}
+
+.footer {
+	width: 100%;
+	height: 40px;
+	line-height: 40px;
+	color: #fff;
+	background: #145fa6;
+	text-align: center;
+	font-size: 16px;
+	position: fixed;
+	bottom: 0;
+}
+
+.daotalk {
+	color: #fff;
+	font-size: 16px;
+}
+
+#loginOut {
+	color: #fff;
+	text-decoration: none;
+	margin-left: 30px;
+}
+/* login */
+.login {
+	width: 100%;
+	height: 980px;
+	background-size: 100% 100%;
+	background: url(../images/loginbg.jpg) no-repeat;
+	background-position: 0 -180px;
+}
+
+.login .midden {
+	width: 400px;
+	height: 340px;
+	background: #fff;
+	border-radius: 2px;
+	margin: auto;
+	position: relative;
+	top: 270px;
+	padding-top: 10px;
+}
+
+.login .midden .title {
+	font-size: 16px;
+	color: #145fa6;
+	font-weight: 600;
+}
+
+.login .midden .title img {
+	width: 120px;
+	position: relative;
+	top: 16px;
+	margin-left: 42px;
+	margin-right: 10px;
+}
+
+.login .midden input {
+	width: 300px;
+	height: 40px;
+	line-height: 40px;
+	border-radius: 2px;
+	margin-left: 46px;
+	margin-top: 40px;
+	border: solid 1px #ccc;
+	padding-left: 10px;
+}
+
+.login  button {
+	width: 312px;
+	border: none;
+	cursor: pointer;
+	height: 40px;
+	line-height: 40px;
+	background: #145fa6;
+	color: #fff;
+	margin-left: 46px;
+	margin-top: 40px;
+	border-radius: 2px;
+	font-size: 16px;
+}
+
+/* dataindex */
+.contentALL {
+	width: 1200px;
+	height: auto;
+	margin: auto;
+	margin-top: 30px;
+}
+#dataRegisterAgain{
+	width: 158px;
+    height: 34px;
+    line-height: 34px;
+    color: #000;
+    border: solid 1px #ccc;
+    margin-bottom: 20px;
+    text-indent: 4px;
+}
+#dataRegisterEnd{
+	width: 158px;
+    height: 34px;
+    line-height: 34px;
+    color: #000;
+    border: solid 1px #ccc;
+    margin-bottom: 20px;
+    text-indent: 4px;
+    margin-right: 30px;
+}
+#dataInvestAgain{
+	width: 158px;
+    height: 34px;
+    line-height: 34px;
+    color: #000;
+    border: solid 1px #ccc;
+    margin-bottom: 20px;
+    text-indent: 4px;
+}
+#dataInvestEnd{
+	width: 158px;
+    height: 34px;
+    line-height: 34px;
+    color: #000;
+    border: solid 1px #ccc;
+    margin-bottom: 20px;
+    text-indent: 4px;
+}
+.datatable {
+	width: 100%;
+	border-left: solid 1px #ccc;
+	border-top: solid 1px #ccc;
+	border-right: none;
+	margin-top: 30px;
+}
+
+.datatable tr {
+	width: 25%;
+	text-align: center;
+}
+
+.datatable tr td {
+	border-bottom: solid 1px #ccc;
+	height: 36px;
+	line-height: 36px;
+	border-right: solid 1px #ccc;
+}
+
+/* RegisterStat */
+.contentALL select {
+	width: 128px;
+	height: 34px;
+	line-height: 34px;
+	color: #000;
+	border: solid 1px #ccc;
+	margin-right: 28.8px;
+}
+
+.contentALL .mr0 {
+	margin-right: 0px;
+}
+
+.user_name {
+	height: 30px;
+	margin-top: 10px;
+	width: 165px;
+	text-indent:4px;
+}
+
+.phone {
+	height: 30px;
+	margin-top: 10px;
+}
+
+.getout {
+	display: inline-block;
+	cursor: pointer;
+	width: 100px;
+	height: 36px;
+	line-height: 36px;
+	background: #145fa6;
+	color: #fff;
+	text-align: center;
+	position: relative;
+	top: 2px;
+	border: none;
+}
+
+.find {
+	margin-left: 20px;
+
+}
+
+/*investStat */
+/* channelManager */
+.addNew {
+	display: none;
+}
+
+.editNew {
+	display: none;
+}
+
+.retainEdit {
+	cursor: pointer;
+}
+
+.magenewAdd {
+	margin-left: 668px;
+}
+
+.addNew .name input {
+	width: 180px;
+	height: 20px;
+	line-height: 20px;
+	float: right;
+	margin-left: 20px;
+}
+
+.addNew .name {
+	font-size: 14px;
+	margin: 30px 20px;
+}
+
+.addNew .num {
+	font-size: 14px;
+	margin: 30px 20px;
+}
+
+.addNew .num input {
+	width: 180px;
+	height: 20px;
+	line-height: 20px;
+	float: right;
+	margin-left: 20px;
+}
+
+.addNew .btbutn li {
+	float: left;
+	list-style-type: none;
+}
+
+.addNew .btbutn button {
+	width: 100px;
+	height: 34px;
+	background: #145fa6;
+	color: #fff;
+	border: none;
+	margin-left: 40px;
+	margin-bottom: 40px;
+	margin-top: 20px;
+	border-radius: 2px;
+	cursor: pointer;
+}
+
+.editNew .name input {
+	width: 180px;
+	height: 20px;
+	line-height: 20px;
+	float: right;
+	margin-left: 20px;
+}
+
+.editNew .num {
+	font-size: 14px;
+	margin: 30px 20px;
+}
+
+.editNew .num input {
+	width: 180px;
+	height: 20px;
+	line-height: 20px;
+	float: right;
+	margin-left: 20px;
+}
+
+.editNew .btbutn li {
+	float: left;
+	list-style-type: none;
+}
+
+.editNew .btbutn button {
+	width: 100px;
+	height: 34px;
+	background: #145fa6;
+	color: #fff;
+	border: none;
+	margin-left: 40px;
+	margin-bottom: 40px;
+	margin-top: 20px;
+	border-radius: 2px;
+	cursor: pointer;
+}
+
+.editNew .name {
+	font-size: 14px;
+	margin: 30px 20px;
+}
+
+/* permissionSet */
+.deleteEdit {
+	cursor: pointer;
+}
+
+.editAct {
+	display: none;
+}
+
+.editAct .name input {
+	width: 180px;
+	height: 20px;
+	line-height: 20px;
+	float: right;
+	margin-left: 20px;
+}
+
+.editAct .num {
+	font-size: 14px;
+	margin: 30px 20px;
+}
+
+.editAct .num input {
+	width: 180px;
+	height: 20px;
+	line-height: 20px;
+	float: right;
+	margin-left: 20px;
+}
+
+.editAct .btbutn li {
+	float: left;
+	list-style-type: none;
+}
+
+.editAct .btbutn button {
+	width: 100px;
+	height: 34px;
+	margin-right: 30px;
+	background: #145fa6;
+	color: #fff;
+	border: none;
+	margin-left: 40px;
+	margin-bottom: 40px;
+	margin-top: 20px;
+	border-radius: 2px;
+	cursor: pointer;
+}
+
+.editAct .name {
+	font-size: 14px;
+	margin: 30px 20px;
+}
+
+.list {
+	width: 1200px;
+	margin: auto;
+	margin-bottom: 30px;
+	margin-top: 20px;
+	height: 40px;
+}
+
+.list li {
+	float: left;
+	background: #fff;
+	border: solid 1px #2b6db4;
+	width: 100px;
+	cursor: pointer;
+	height: 40px;
+	line-height: 40px;
+	color: #2b6db4;
+	text-align: center;
+	font-size: 14px;
+	list-style-type: none;
+	margin-right: 20px;
+	border-radius: 4px;
+}
+
+.list .active {
+	color: #fff;
+	background: #2b6db4;
+}
+
+.lookSet .btbutn {
+	width: 200px;
+	margin: auto;
+}
+
+.lookSet .btbutn li {
+	float: left;
+	list-style-type: none;
+	margin-left: 20px;
+}
+
+.userSet .btbutn {
+	width: 200px;
+	margin: auto;
+}
+
+.userSet .btbutn li {
+	float: left;
+	list-style-type: none;
+	margin-left: 20px;
+}
+
+.perform {
+	width: 250px;
+	margin: auto;
+	padding-left: 30px;
+	padding-top: 30px;
+	padding-bottom: 30px;
+}
+
+.perform label {
+	width: 100px;
+	display: inline-block;
+}
+/* .layui-layer-content{min-height:300px} */

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qdtj.dao.IRegisterStatDao">
+	<!-- 注册统计汇总数集合 -->
+	<resultMap id="resultMap-Register-Sum" type="java.util.HashMap">
+		<result column="registerStatSum" property="registerStatSum" jdbcType="VARCHAR" />
+		<result column="realNameSum" property="realNameSum" jdbcType="VARCHAR" />
+		<result column="checkCardSum" property="checkCardSum" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<select id="getRegisterStatSum" parameterType="java.util.Map" resultMap="resultMap-Register-Sum">
+		SELECT COUNT(1) registerStatSum, <!-- 注册用户量汇总数 -->
+		(SELECT COUNT(1) FROM S61.T6119 tg ) realNameSum, <!-- 实名认证用户汇总数，暂未加上时间跨度条件 -->
+		(SELECT COUNT(1) FROM S61.T6114 yhk ) checkCardSum <!-- 成功绑卡用户汇总数，暂未加上时间跨度条件 -->
+		FROM S61.T6110 rs
+		WHERE 1=1
+	</select>
+	
+	<!-- 注册统计集合 -->
+	<resultMap id="resultMap-Register" type="java.util.HashMap">
+		<result column="registerChannel" property="registerChannel" jdbcType="VARCHAR" />
+		<result column="userName" property="userName" jdbcType="VARCHAR" />
+		<result column="phone" property="phone" jdbcType="VARCHAR" />
+		<result column="isRealName" property="isRealName" jdbcType="VARCHAR" />
+		<result column="isCheckCard" property="isCheckCard" jdbcType="VARCHAR" />
+		<result column="registerDate" property="registerDate" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<select id="getRegisterStat" parameterType="java.util.Map" resultType="com.qdtj.domain.RegisterStatCondition">
+		SELECT rs.F23 registerChannel, <!-- 注册渠道 -->
+		rs.F02 userName, <!-- 用户名 -->
+		REPLACE(rs.F04, SUBSTRING(rs.F04,4,4),'****') phone, <!-- 手机号码 -->
+		IF((SELECT COUNT(1) FROM S61.T6119 tg where tg.F01 = rs.F01)>0,'是','-') isRealName, <!-- 是否实名 -->
+		IF((SELECT COUNT(1) FROM S61.T6114 yhk where yhk.F02 = rs.F01)>0,'是','-') isCheckCard, <!-- 是否绑卡 -->
+		rs.F09 registerDate <!-- 注册时间 -->
+		 FROM S61.T6110 rs
+		 WHERE 1=1
+		 <if test="dataRegisterAgain != null and dataRegisterAgain !=''">
+        AND rs.F09 <![CDATA[ >= ]]> #{dataRegisterAgain}
+        </if>
+        <if test="dataRegisterEnd != null and dataRegisterEnd !=''">
+        AND rs.F09 <![CDATA[ <= ]]> #{dataRegisterEnd}
+        </if>
+		<if test="channelNumber != null and channelNumber !=''">
+        AND rs.F23 = #{channelNumber}<!-- 渠道名称 -->
+        </if>
+		<if test="terminalType != null and terminalType !=''">
+        AND rs.F08 = #{terminalType}<!-- 注册终端 -->
+        </if>
+		<if test="isRealName != null and isRealName != '' and isRealName =='1'.toString()">
+        AND EXISTS (SELECT 1 FROM S61.T6119 tgw where tgw.F01 = rs.F01)<!-- 是实名 -->
+        </if>
+		<if test="isRealName != null and isRealName != '' and isRealName =='0'.toString()">
+        AND NOT EXISTS (SELECT 1 FROM S61.T6119 tgw where tgw.F01 = rs.F01)<!-- 否实名 -->
+        </if>
+		<if test="isCheckCard != null and isCheckCard != '' and isCheckCard =='1'.toString()">
+        AND EXISTS (SELECT 1 FROM S61.T6114 yhkw where yhkw.F02 = rs.F01)<!-- 是绑卡 -->
+        </if>
+		<if test="isCheckCard != null and isCheckCard != '' and isCheckCard =='0'.toString()">
+        AND NOT EXISTS (SELECT 1 FROM S61.T6114 yhkw where yhkw.F02 = rs.F01)<!-- 否绑卡 -->
+        </if>
+        <if test="userName != null and userName !=''">
+        AND rs.F02 LIKE concat(concat('%',#{userName}),'%')<!-- 用户名 -->
+        </if>
+		<if test="phone != null and phone !=''">
+        AND rs.F04 LIKE concat(concat('%',#{phone}),'%')<!-- 手机号 -->
+        </if>
+	</select>
+
+</mapper>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qdtj.dao.IUserDao">
+
+	<resultMap id="User" type="com.qdtj.domain.User">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="account" property="account" jdbcType="VARCHAR" />
+		<result column="user_name" property="userName" jdbcType="VARCHAR" />
+		<result column="pwd" property="pwd" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<resultMap id="UserRole" type="java.util.HashMap">
+		<result column="id" property="id" jdbcType="INTEGER" />
+		<result column="user_name" property="userName" jdbcType="VARCHAR" />
+		<result column="role_id" property="roleId" jdbcType="INTEGER" />
+		<result column="role_cnname" property="roleCnname" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<resultMap id="UserChannel" type="java.util.HashMap">
+		<result column="id" property="id" jdbcType="INTEGER" />
+		<result column="user_name" property="userName" jdbcType="VARCHAR" />
+		<result column="channel_id" property="channelId" jdbcType="INTEGER" />
+		<result column="channel_name" property="channelName" jdbcType="VARCHAR" />
+		<result column="channel_number" property="channelNumber" jdbcType="VARCHAR" />
+		<result column="dis" property="dis" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<select id="login" parameterType="com.qdtj.domain.User"
+		resultType="java.lang.Integer">
+		SELECT COUNT(1) FROM user t
+		WHERE t.account = #{account}
+		AND
+		t.pwd = #{pwd}
+	</select>
+
+	<select id="getUserInfo" parameterType="com.qdtj.domain.User"
+		resultMap="User">
+		SELECT * FROM user t
+		WHERE t.account = #{account}
+		AND
+		t.pwd = #{pwd}
+	</select>
+
+	<insert id="addUser" parameterType="com.qdtj.domain.User">
+		INSERT INTO user
+		VALUES(0,#{account},#{userName},#{pwd},#{desc})
+	</insert>
+
+	<update id="updateUser" parameterType="com.qdtj.domain.User">
+		UPDATE user SET user_name
+		= #{userName},pwd = #{pwd} WHERE id = #{id}
+	</update>
+
+	<delete id="deleteUser" parameterType="java.lang.Integer">
+		DELETE FROM user
+		WHERE id =
+		#{id}
+	</delete>
+
+	<select id="getUserList" resultType="com.qdtj.domain.User">
+		SELECT t.id AS id,t.user_name AS userName FROM user t
+	</select>
+	
+	<select id="getUserRoleList" resultMap="UserRole">
+		<!-- SELECT t.role_id AS roleId FROM user_role t
+		WHERE t.user_id = #{userId} -->
+		SELECT t3.id AS id,t3.user_name AS userName,t1.role_id AS roleId,t1.role_cnname AS roleCnname
+		FROM  
+		role t1 LEFT JOIN user_role t2
+		ON
+		t1.role_id = t2.role_id
+		AND t2.user_id = #{id}
+		LEFT JOIN user t3
+		ON
+		t2.user_id = t3.id
+		AND
+		t3.id = #{id}
+	</select>
+
+	<delete id="deleteUserRole" parameterType="java.lang.Integer">
+		DELETE FROM user_role  WHERE user_id = #{userId}
+	</delete>
+	
+	<insert id="insertUserRole" parameterType="com.qdtj.domain.UserRole">
+		INSERT INTO user_role VALUES(0,#{userId},#{roleId})
+	</insert>
+	
+	<select id="getUserChannel" resultMap="UserChannel">
+		SELECT
+		t.id,t.user_name,t.channel_id,t.channel_name,t.channel_number,COUNT(DISTINCT t.channel_id) AS dis
+		FROM
+		(
+		SELECT
+		t1.id,t1.user_name,t3.role_id,t3.role_cnname,t5.channel_id,t5.channel_name,t5.channel_number
+		FROM
+		user t1 LEFT JOIN user_role t2
+		ON
+		t1.id = t2.user_id
+		LEFT JOIN role t3
+		ON
+		t3.role_id = t2.role_id
+		LEFT JOIN role_channel t4
+		ON
+		t4.role_id = t3.role_id
+		LEFT JOIN channel t5
+		ON
+		t5.channel_id = t4.channel_id
+		) t
+		WHERE t.id = #{uesrId}
+		GROUP BY t.channel_id,t.id,t.user_name,t.channel_name,t.channel_number
+	</select>
+	
+</mapper>

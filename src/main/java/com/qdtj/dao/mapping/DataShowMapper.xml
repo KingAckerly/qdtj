@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qdtj.dao.IDataShowDao">
+
+	<select id="showData" resultType="com.qdtj.domain.DataShow">
+		SELECT
+		(
+		SELECT IFNULL(SUM(F04),0) FROM S62.T6250 WHERE DATE_FORMAT(F06,'%Y-%m-%d') =
+		CURDATE()
+		)AS totalAmountToday,
+		(
+		SELECT IFNULL(SUM(F04),0) FROM S62.T6250 WHERE DATE_FORMAT(F06,'%Y-%m-%d') =
+		DATE_SUB(CURDATE(),INTERVAL 1 DAY)
+		)AS totalAmountYesterday,
+		(
+		SELECT IFNULL(SUM(F04),0) FROM S62.T6250 WHERE
+		YEARWEEK(DATE_FORMAT(F06,'%Y-%m-%d')) = YEARWEEK(NOW())
+		)AS totalAmountWeek,
+		(
+		SELECT IFNULL(SUM(F04),0) FROM S62.T6250 WHERE DATE_FORMAT(F06,'%Y-%m') =
+		DATE_FORMAT(CURDATE(),'%Y-%m')
+		)AS totalAmountMonth,
+		(
+		SELECT IFNULL(SUM(F02),0) FROM S70.T7052 WHERE F01 = CURDATE()
+		)AS totalNumberToday,
+		(
+		SELECT IFNULL(SUM(F02),0) FROM S70.T7052 WHERE F01 =
+		DATE_SUB(CURDATE(),INTERVAL 1 DAY)
+		)AS totalNumberYesterday,
+		(
+		SELECT IFNULL(SUM(F02),0) FROM S70.T7052 WHERE YEARWEEK(F01) =
+		YEARWEEK(NOW())
+		)AS totalNumberWeek,
+		(
+		SELECT IFNULL(SUM(F02),0) FROM S70.T7052 WHERE DATE_FORMAT(F01,'%Y-%m') =
+		DATE_FORMAT(CURDATE(),'%Y-%m')
+		)AS totalNumberMonth,
+		(
+		SELECT COUNT(DISTINCT t.F03)
+		FROM
+		S62.T6250 t
+		WHERE
+		t.F06 IN (
+		SELECT
+		MIN(T6250.F06)
+		FROM
+		S62.T6250
+		GROUP BY
+		F03
+		)
+		AND DATE_FORMAT(t.F06, '%Y-%m-%d') = CURDATE()
+		)AS totalInvestmentToday,
+		(
+		SELECT COUNT(DISTINCT t.F03)
+		FROM
+		S62.T6250 t
+		WHERE
+		t.F06 IN (
+		SELECT
+		MIN(T6250.F06)
+		FROM
+		S62.T6250
+		GROUP BY
+		F03
+		)
+		AND DATE_FORMAT(t.F06, '%Y-%m-%d') = DATE_SUB(CURDATE(),INTERVAL 1 DAY)
+		)AS totalInvestmentYesterday,
+		(
+		SELECT COUNT(DISTINCT t.F03)
+		FROM
+		S62.T6250 t
+		WHERE
+		t.F06 IN (
+		SELECT
+		MIN(T6250.F06)
+		FROM
+		S62.T6250
+		GROUP BY
+		F03
+		)
+		AND YEARWEEK(DATE_FORMAT(t.F06,'%Y-%m-%d')) = YEARWEEK(NOW())
+		)AS totalInvestmentWeek,
+		(
+		SELECT COUNT(DISTINCT t.F03)
+		FROM
+		S62.T6250 t
+		WHERE
+		t.F06 IN (
+		SELECT
+		MIN(T6250.F06)
+		FROM
+		S62.T6250
+		GROUP BY
+		F03
+		)
+		AND DATE_FORMAT(t.F06,'%Y-%m') = DATE_FORMAT(CURDATE(),'%Y-%m')
+		)AS totalInvestmentMonth
+		FROM
+		DUAL
+	</select>
+
+</mapper>

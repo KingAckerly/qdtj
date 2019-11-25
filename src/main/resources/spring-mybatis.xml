@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+	    http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+	<!-- 注解自动扫描 -->
+	<context:component-scan base-package="com.qdtj" />
+	<!-- 加载数据库的属性配置文件 -->
+	<!-- <bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:db.properties</value>
+			</list>
+		</property>
+	</bean> -->
+
+	<!-- 配置数据源 -->
+	<!-- <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+        destroy-method="close">
+        <property name="driverClassName" value="${driver}" />
+        <property name="url" value="${url}" />
+        <property name="username" value="${username}" />
+        <property name="password" value="${password}" />
+        初始化连接大小
+        <property name="initialSize" value="${initialSize}"></property>
+        连接池最大数量
+        <property name="maxActive" value="${maxActive}"></property>
+        连接池最大空闲
+        <property name="maxIdle" value="${maxIdle}"></property>
+        连接池最小空闲
+        <property name="minIdle" value="${minIdle}"></property>
+        获取连接最大等待时间
+        <property name="maxWait" value="${maxWait}"></property>
+    </bean> -->
+    
+    <!-- 多数据源配置 -->
+	<bean id="qdtj" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<property name="url" value="jdbc:mysql://localhost:3306/qdtj?useUnicode=true&amp;characterEncoding=UTF-8"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="root"></property>
+	</bean>
+	<bean id="S10" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<!-- <property name="url" value="jdbc:mysql://192.168.0.222:3306/S10?useUnicode=true&amp;characterEncoding=UTF-8"></property> -->
+		<property name="url" value="jdbc:mysql://39.108.73.79:33006/S10?useUnicode=true&amp;characterEncoding=UTF-8"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="tcxDM123456!"></property>
+	</bean>
+	<bean id="S11" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<!-- <property name="url" value="jdbc:mysql://192.168.0.222:3306/S11?useUnicode=true&amp;characterEncoding=UTF-8"></property> -->
+		<property name="url" value="jdbc:mysql://39.108.73.79:33006/S11?useUnicode=true&amp;characterEncoding=UTF-8"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="tcxDM123456!"></property>
+	</bean>
+	<bean id="S50" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<!-- <property name="url" value="jdbc:mysql://192.168.0.222:3306/S50?useUnicode=true&amp;characterEncoding=UTF-8"></property> -->
+		<property name="url" value="jdbc:mysql://39.108.73.79:33006/S50?useUnicode=true&amp;characterEncoding=UTF-8"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="tcxDM123456!"></property>
+	</bean>
+	<bean id="S51" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<!-- <property name="url" value="jdbc:mysql://192.168.0.222:3306/S51?useUnicode=true&amp;characterEncoding=UTF-8"></property> -->
+		<property name="url" value="jdbc:mysql://39.108.73.79:33006/S51?useUnicode=true&amp;characterEncoding=UTF-8"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="tcxDM123456!"></property>
+	</bean>
+	<bean id="S61" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<!-- <property name="url" value="jdbc:mysql://192.168.0.222:3306/S61?useUnicode=true&amp;characterEncoding=UTF-8"></property> -->
+		<property name="url" value="jdbc:mysql://39.108.73.79:33006/S61?useUnicode=true&amp;characterEncoding=UTF-8"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="tcxDM123456!"></property>
+	</bean>
+	<bean id="S62" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<!-- <property name="url" value="jdbc:mysql://192.168.0.222:3306/S62?useUnicode=true&amp;characterEncoding=UTF-8"></property> -->
+		<property name="url" value="jdbc:mysql://39.108.73.79:33006/S62?useUnicode=true&amp;characterEncoding=UTF-8"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="tcxDM123456!"></property>
+	</bean>
+	<bean id="S63" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<!-- <property name="url" value="jdbc:mysql://192.168.0.222:3306/S63?useUnicode=true&amp;characterEncoding=UTF-8"></property> -->
+		<property name="url" value="jdbc:mysql://39.108.73.79:33006/S63?useUnicode=true&amp;characterEncoding=UTF-8"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="tcxDM123456!"></property>
+	</bean>
+	<bean id="S64" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<!-- <property name="url" value="jdbc:mysql://192.168.0.222:3306/S64?useUnicode=true&amp;characterEncoding=UTF-8"></property> -->
+		<property name="url" value="jdbc:mysql://39.108.73.79:33006/S64?useUnicode=true&amp;characterEncoding=UTF-8"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="tcxDM123456!"></property>
+	</bean>
+	<bean id="S65" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<!-- <property name="url" value="jdbc:mysql://192.168.0.222:3306/S65?useUnicode=true&amp;characterEncoding=UTF-8"></property> -->
+		<property name="url" value="jdbc:mysql://39.108.73.79:33006/S65?useUnicode=true&amp;characterEncoding=UTF-8"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="tcxDM123456!"></property>
+	</bean>
+	<bean id="S66" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<!-- <property name="url" value="jdbc:mysql://192.168.0.222:3306/S66?useUnicode=true&amp;characterEncoding=UTF-8"></property> -->
+		<property name="url" value="jdbc:mysql://39.108.73.79:33006/S66?useUnicode=true&amp;characterEncoding=UTF-8"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="tcxDM123456!"></property>
+	</bean>
+	<bean id="S70" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<!-- <property name="url" value="jdbc:mysql://192.168.0.222:3306/S70?useUnicode=true&amp;characterEncoding=UTF-8"></property> -->
+		<property name="url" value="jdbc:mysql://39.108.73.79:33006/S70?useUnicode=true&amp;characterEncoding=UTF-8"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="tcxDM123456!"></property>
+	</bean>
+	<bean id="S71" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<!-- <property name="url" value="jdbc:mysql://192.168.0.222:3306/S71?useUnicode=true&amp;characterEncoding=UTF-8"></property> -->
+		<property name="url" value="jdbc:mysql://39.108.73.79:33006/S71?useUnicode=true&amp;characterEncoding=UTF-8"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="tcxDM123456!"></property>
+	</bean>
+
+
+	<!-- 动态配置数据源 -->
+	<bean id="dataSource" class="com.qdtj.datasource.DynamicDataSource">
+		<property name="targetDataSources">
+			<map key-type="java.lang.String">
+				<entry value-ref="qdtj" key="qdtj"></entry>
+				<entry value-ref="S10" key="S10"></entry>
+				<entry value-ref="S11" key="S11"></entry>
+				<entry value-ref="S50" key="S50"></entry>
+				<entry value-ref="S51" key="S51"></entry>
+				<entry value-ref="S61" key="S61"></entry>
+				<entry value-ref="S62" key="S62"></entry>
+				<entry value-ref="S63" key="S63"></entry>
+				<entry value-ref="S64" key="S64"></entry>
+				<entry value-ref="S65" key="S65"></entry>
+				<entry value-ref="S66" key="S66"></entry>
+				<entry value-ref="S70" key="S70"></entry>
+				<entry value-ref="S71" key="S71"></entry>
+			</map>
+		</property>
+		<property name="defaultTargetDataSource" ref="qdtj"></property>      <!-- 默认使用ds1的数据源 -->
+	</bean>
+	
+	<bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean"/>
+
+    <!-- spring和MyBatis完美整合，不需要mybatis的配置映射文件 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <!-- 在创建mybatis 的 sqlsessionfactory时，加载mybatis的主配置文件 -->
+		<property name="configLocation" value="classpath:mybatis-config.xml"></property>
+        <!-- 自动扫描mapping.xml文件 -->
+        <property name="mapperLocations" value="classpath:com/qdtj/dao/mapping/*.xml"></property>
+    </bean>
+    <!-- 配置扫描器：扫描指定包下的xml文档和mapper接口对象，进行spring bean管理 -->
+	<bean id="mapperScanner" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<!-- 扫描com.qdtj.dao这个包以及它的子包下的所有映射接口类 -->
+		<property name="basePackage" value="com.qdtj.dao" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+	</bean>
+    <!-- (事务管理) -->
+    <bean id="transactionManager"
+        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+</beans>
